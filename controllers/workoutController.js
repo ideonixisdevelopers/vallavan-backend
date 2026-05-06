@@ -21,23 +21,3 @@ exports.createWorkout = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
-exports.getWorkoutDetail = async (req, res) => {
-  try {
-    const workout = await WorkoutDetail.findOne({
-      workoutId: req.params.id,
-    });
-
-    if (!workout) {
-      return res.status(404).json({
-        message: "Workout not found",
-      });
-    }
-
-    res.json(workout);
-  } catch (err) {
-    res.status(500).json({
-      message: err.message,
-    });
-  }
-};

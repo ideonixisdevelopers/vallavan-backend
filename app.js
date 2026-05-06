@@ -31,6 +31,6 @@ app.use('/api/student', require("./routes/studentRoutes"));
 app.use('/uploads', express.static('uploads'));
 app.use('/api/trainer', require('./routes/trainerRoutes'));
 app.use("/api", classRoutes);
-
+app.use("/api/workouts", require("./routes/workoutRoutes"));
 
 module.exports = app;

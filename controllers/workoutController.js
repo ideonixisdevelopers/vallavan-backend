@@ -1,13 +1,22 @@
 const Workout = require("../models/Workout");
 
-// create workout
-exports.createWorkout = async (req, res) => {
-  const workout = await Workout.create(req.body);
-  res.status(201).json(workout);
+// GET ALL
+exports.getWorkouts = async (req, res) => {
+  try {
+    const workouts = await Workout.find();
+    res.json(workouts);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
-// get all workouts
-exports.getWorkouts = async (req, res) => {
-  const workouts = await Workout.find();
-  res.json(workouts);
+// CREATE
+exports.createWorkout = async (req, res) => {
+  try {
+    const workout = new Workout(req.body);
+    const saved = await workout.save();
+    res.json(saved);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };

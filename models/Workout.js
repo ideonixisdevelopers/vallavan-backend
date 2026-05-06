@@ -1,12 +1,14 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const workoutSchema = new mongoose.Schema({
   title: String,
-  description: String,
-  level: { type: String, enum: ['beginner', 'intermediate', 'advanced'] },
-  duration: Number, // minutes
-  videoUrl: String,
-  trainerId: mongoose.Schema.Types.ObjectId
-}, { timestamps: true });
+  badge: String,
+  minutes: Number,
+  calories: Number,
+  rating: Number,
+  imageUrl: String,
+  level: String,
+  category: String,
+});
 
-module.exports = mongoose.model('Workout', workoutSchema);
+module.exports = mongoose.model("workoutsCategories", workoutSchema);

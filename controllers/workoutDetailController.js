@@ -1,13 +1,12 @@
 const WorkoutDetail = require("../models/WorkoutDetail");
 
-
-// 🔥 GET DETAIL BY workoutId
+// GET DETAIL BY workoutId
 exports.getWorkoutDetail = async (req, res) => {
   try {
     const { id } = req.params;
 
     const data = await WorkoutDetail.findOne({
-      workoutId: id, // 🔥 THIS IS KEY
+      workoutId: id,
     });
 
     if (!data) {

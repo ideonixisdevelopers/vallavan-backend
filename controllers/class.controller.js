@@ -1,107 +1,202 @@
-const ClassModel = require("../models/Class");
+const ClassModel =
+    require("../models/Class");
 
 /// ✅ CREATE CLASS
-exports.createClass = async (req, res) => {
+exports.createClass =
+    async (req, res) => {
+
   try {
 
-    const { trainerId, title, startTime, duration, type } = req.body;
+    const {
 
-    if (!trainerId || !title || !startTime || !duration || !type) {
+      trainerId,
+
+      title,
+
+      startTime,
+
+      duration,
+
+      type,
+
+      status,
+
+    } = req.body;
+
+    if (
+      !trainerId ||
+      !title ||
+      !startTime ||
+      !duration ||
+      !type
+    ) {
+
       return res.status(400).json({
+
         success: false,
-        message: "Missing required fields",
+
+        message:
+            "Missing required fields",
       });
     }
 
-    const newClass = await ClassModel.create({
+    const newClass =
+        await ClassModel.create({
+
       trainerId,
+
       title,
+
       startTime,
+
       duration,
+
       type,
+
+      status:
+          status ||
+          "upcoming",
     });
 
     res.status(201).json({
+
       success: true,
-      message: "Class created successfully",
-      data: newClass,
+
+      message:
+          "Class created successfully",
+
+      data:
+          newClass,
     });
 
   } catch (error) {
 
     res.status(500).json({
-      success: false,
-      message: error.message,
-    });
 
+      success: false,
+
+      message:
+          error.message,
+    });
   }
 };
-exports.startClass = async (req, res) => {
+
+
+/// ✅ START CLASS
+exports.startClass =
+    async (req, res) => {
+
   try {
 
-    const { classId } = req.body;
+    const { classId } =
+        req.body;
 
-    const updated = await ClassModel.findByIdAndUpdate(
+    const updated =
+        await ClassModel.findByIdAndUpdate(
+
       classId,
+
       { status: "live" },
+
       { new: true }
     );
 
     res.json({
+
       success: true,
-      message: "Class is LIVE",
-      data: updated,
+
+      message:
+          "Class is LIVE",
+
+      data:
+          updated,
     });
 
   } catch (error) {
+
     res.status(500).json({
+
       success: false,
-      message: error.message,
+
+      message:
+          error.message,
     });
   }
 };
 
 
 /// ✅ FETCH TRAINER CLASSES
-exports.getTrainerClasses = async (req, res) => {
-  try {
-    const { trainerId } = req.params;
+exports.getTrainerClasses =
+    async (req, res) => {
 
-    const classes = await ClassModel.find({ trainerId })
-      .sort({ startTime: 1 });
+  try {
+
+    const { trainerId } =
+        req.params;
+
+    const classes =
+        await ClassModel.find({
+
+      trainerId,
+
+    }).sort({
+
+      startTime: 1,
+    });
 
     res.json({
+
       success: true,
+
       data: classes,
     });
 
   } catch (error) {
+
     res.status(500).json({
+
       success: false,
-      message: error.message,
+
+      message:
+          error.message,
     });
   }
 };
 
 
-/// ✅ FETCH ALL CLASSES (Student Dashboard)
-exports.getAllClasses = async (req, res) => {
+/// ✅ FETCH ALL CLASSES
+exports.getAllClasses =
+    async (req, res) => {
+
   try {
-    const classes = await ClassModel.find()
-      .sort({ startTime: 1 });
+
+    const classes =
+        await ClassModel.find()
+            .sort({
+
+      startTime: 1,
+    });
 
     res.json({
+
       success: true,
+
       data: classes,
     });
 
-    console.log("tessss",classes);
-
+    console.log(
+      "tessss",
+      classes,
+    );
 
   } catch (error) {
+
     res.status(500).json({
+
       success: false,
-      message: error.message,
+
+      message:
+          error.message,
     });
   }
 };

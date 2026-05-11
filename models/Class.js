@@ -77,7 +77,6 @@ const classSchema =
   }
 
 });
-
 module.exports =
     mongoose.model(
       "Class",

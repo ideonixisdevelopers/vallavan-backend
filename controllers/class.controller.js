@@ -2,92 +2,92 @@ const ClassModel = require("../models/Class");
 
 /// ✅ CREATE CLASS
 exports.createClass =
-    async (req, res) => {
+  async (req, res) => {
 
-  try {
+    try {
 
-    const {
+      const {
 
-      trainerId,
+        trainerId,
 
-      title,
+        title,
 
-      schedule,
+        schedule,
 
-      startTime,
+        startTime,
 
-      duration,
+        duration,
 
-      type,
+        type,
 
-      status,
+        status,
 
-    } = req.body;
+      } = req.body;
 
-    if (
-      !trainerId ||
-      !title ||
-      !startTime ||
-      !duration ||
-      !type
-    ) {
+      if (
+        !trainerId ||
+        !title ||
+        !startTime ||
+        !duration ||
+        !type
+      ) {
 
-      return res.status(400).json({
+        return res.status(400).json({
+
+          success: false,
+
+          message:
+            "Missing required fields",
+        });
+      }
+
+      const newClass =
+        await ClassModel.create({
+
+          trainerId,
+
+          title,
+
+          schedule,
+
+          startTime,
+
+          duration,
+
+          type,
+
+          status:
+            status ||
+            "upcoming",
+        });
+
+      res.status(201).json({
+
+        success: true,
+
+        message:
+          "Class created successfully",
+
+        data:
+          newClass,
+      });
+
+    } catch (error) {
+
+      console.log(
+        "CREATE CLASS ERROR =>",
+        error,
+      );
+
+      res.status(500).json({
 
         success: false,
 
         message:
-            "Missing required fields",
+          error.message,
       });
     }
-
-    const newClass =
-        await ClassModel.create({
-
-      trainerId,
-
-      title,
-
-      schedule,
-
-      startTime,
-
-      duration,
-
-      type,
-
-      status:
-          status ||
-          "upcoming",
-    });
-
-    res.status(201).json({
-
-      success: true,
-
-      message:
-          "Class created successfully",
-
-      data:
-          newClass,
-    });
-
-  } catch (error) {
-
-    console.log(
-      "CREATE CLASS ERROR =>",
-      error,
-    );
-
-    res.status(500).json({
-
-      success: false,
-
-      message:
-          error.message,
-    });
-  }
-};
+  };
 
 exports.startClass = async (req, res) => {
   try {
@@ -114,6 +114,49 @@ exports.startClass = async (req, res) => {
   }
 };
 
+exports.completeClass =
+  async (req, res) => {
+
+    try {
+
+      const { classId } =
+        req.body;
+
+      const updated =
+        await ClassModel.findByIdAndUpdate(
+
+          classId,
+
+          {
+            status:
+              "completed",
+          },
+
+          { new: true }
+        );
+
+      res.json({
+
+        success: true,
+
+        message:
+          "Class completed",
+
+        data:
+          updated,
+      });
+
+    } catch (error) {
+
+      res.status(500).json({
+
+        success: false,
+
+        message:
+          error.message,
+      });
+    }
+  };
 
 /// ✅ FETCH TRAINER CLASSES
 exports.getTrainerClasses = async (req, res) => {
@@ -148,7 +191,7 @@ exports.getAllClasses = async (req, res) => {
       data: classes,
     });
 
-    console.log("tessss",classes);
+    console.log("tessss", classes);
 
 
   } catch (error) {

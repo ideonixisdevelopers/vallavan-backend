@@ -1,34 +1,85 @@
-const mongoose = require("mongoose");
+const mongoose =
+    require("mongoose");
 
-const classSchema = new mongoose.Schema({
+const classSchema =
+    new mongoose.Schema({
 
-  trainerId: String,
+  trainerId: {
 
-  title: String,
+    type: String,
 
-  startTime: {
-    type: Date,
     required: true,
   },
 
-  duration: Number,
+  title: {
+
+    type: String,
+
+    required: true,
+  },
+
+  schedule: {
+
+    type: String,
+
+    default: "",
+  },
+
+  startTime: {
+
+    type: Date,
+
+    required: true,
+  },
+
+  duration: {
+
+    type: Number,
+
+    required: true,
+  },
 
   type: {
+
     type: String,
-    enum: ["one_to_one", "one_to_many"],
+
+    enum: [
+
+      "one_to_one",
+
+      "one_to_many",
+    ],
+
+    required: true,
   },
 
   status: {
+
     type: String,
-    enum: ["upcoming", "live", "completed"],
+
+    enum: [
+
+      "upcoming",
+
+      "live",
+
+      "completed",
+    ],
+
     default: "upcoming",
   },
 
   createdAt: {
+
     type: Date,
+
     default: Date.now,
   }
 
 });
 
-module.exports = mongoose.model("Class", classSchema);
+module.exports =
+    mongoose.model(
+      "Class",
+      classSchema,
+    );

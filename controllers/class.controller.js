@@ -1,39 +1,91 @@
 const ClassModel = require("../models/Class");
 
 /// ✅ CREATE CLASS
-exports.createClass = async (req, res) => {
+exports.createClass =
+    async (req, res) => {
+
   try {
 
-    const { trainerId, title, startTime, duration, type } = req.body;
+    const {
 
-    if (!trainerId || !title || !startTime || !duration || !type) {
+      trainerId,
+
+      title,
+
+      schedule,
+
+      startTime,
+
+      duration,
+
+      type,
+
+      status,
+
+    } = req.body;
+
+    if (
+      !trainerId ||
+      !title ||
+      !startTime ||
+      !duration ||
+      !type
+    ) {
+
       return res.status(400).json({
+
         success: false,
-        message: "Missing required fields",
+
+        message:
+            "Missing required fields",
       });
     }
 
-    const newClass = await ClassModel.create({
+    const newClass =
+        await ClassModel.create({
+
       trainerId,
+
       title,
+
+      schedule,
+
       startTime,
+
       duration,
+
       type,
+
+      status:
+          status ||
+          "upcoming",
     });
 
     res.status(201).json({
+
       success: true,
-      message: "Class created successfully",
-      data: newClass,
+
+      message:
+          "Class created successfully",
+
+      data:
+          newClass,
     });
 
   } catch (error) {
 
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+    console.log(
+      "CREATE CLASS ERROR =>",
+      error,
+    );
 
+    res.status(500).json({
+
+      success: false,
+
+      message:
+          error.message,
+    });
   }
 };
 exports.startClass = async (req, res) => {

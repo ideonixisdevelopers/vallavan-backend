@@ -12,8 +12,8 @@ router.get("/trainer/classes/:trainerId", classController.getTrainerClasses);
 router.get("/student/classes", classController.getAllClasses);
 router.post("/trainer/start-class", classController.startClass);
 router.post(
-    "/trainer/complete-class",
-    classController.completeClass,
+  "/trainer/complete-class",
+  classController.completeClass,
 );
 
 module.exports = router;

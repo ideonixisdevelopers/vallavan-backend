@@ -159,22 +159,82 @@ exports.completeClass =
   };
 
 /// ✅ FETCH TRAINER CLASSES
-exports.getTrainerClasses = async (req, res) => {
-  try {
-    const { trainerId } = req.params;
+exports.getTrainerClasses =
+    async (req, res) => {
 
-    const classes = await ClassModel.find({ trainerId })
-      .sort({ startTime: 1 });
+  try {
+
+    const { trainerId } =
+        req.params;
+
+    const classes =
+        await ClassModel.find({
+
+      trainerId,
+
+    }).sort({
+
+      startTime: 1,
+    });
+
+    // ✅ AUTO COMPLETE
+    for (const cls of classes) {
+
+      if (
+        cls.status === "live"
+      ) {
+
+        const endTime =
+            new Date(
+
+          cls.startTime.getTime() +
+
+          cls.duration *
+              60000
+        );
+
+        const now =
+            new Date();
+
+        if (
+          now > endTime
+        ) {
+
+          cls.status =
+              "completed";
+
+          await cls.save();
+        }
+      }
+    }
+
+    // ✅ REFRESH UPDATED DATA
+    const updatedClasses =
+        await ClassModel.find({
+
+      trainerId,
+
+    }).sort({
+
+      startTime: 1,
+    });
 
     res.json({
+
       success: true,
-      data: classes,
+
+      data:
+          updatedClasses,
     });
 
   } catch (error) {
+
     res.status(500).json({
+
       success: false,
-      message: error.message,
+
+      message:
+          error.message,
     });
   }
 };

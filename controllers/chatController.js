@@ -132,3 +132,35 @@ exports.getTrainerChats = async (req, res) => {
     });
   }
 };
+
+exports.getStudentChats = async (
+  req,
+  res
+) => {
+
+  try {
+
+    const { studentId } =
+      req.params;
+
+    const chats = await Chat.find({
+      studentId,
+    }).sort({ createdAt: 1 });
+
+    return res.status(200).json({
+      success: true,
+      messages: chats,
+    });
+
+  } catch (e) {
+
+    console.log(
+      "GET STUDENT CHATS ERROR =>",
+      e
+    );
+
+    return res.status(500).json({
+      success: false,
+    });
+  }
+};

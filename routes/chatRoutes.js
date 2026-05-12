@@ -21,4 +21,9 @@ router.get(
   getTrainerChats
 );
 
+router.get(
+  "/student/:studentId",
+  getStudentChats
+);
+
 module.exports = router;

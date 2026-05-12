@@ -32,7 +32,7 @@ app.use('/uploads', express.static('uploads'));
 app.use('/api/trainer', require('./routes/trainerRoutes'));
 app.use("/api", classRoutes);
 app.use("/api/workouts", require("./routes/workoutRoutes")); 
-app.use("/api", require("./routes/bannerRoutes"),
-);
+app.use("/api", require("./routes/bannerRoutes"));
+app.use("/api/chat", require("./routes/chatRoutes"));
 
 module.exports = app;

@@ -5,6 +5,7 @@ const router = express.Router();
 const {
   sendMessage,
   getTrainerChats,
+  getStudentChats,
 } = require("../controllers/chatController");
 
 

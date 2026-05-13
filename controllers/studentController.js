@@ -495,7 +495,7 @@ exports.verifyStudentOtp = async (req, res) => {
       {
         userId: user._id,
         role: user.role,
-        phone: user.phone 
+        phone: user.phone
       },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
@@ -510,19 +510,32 @@ exports.verifyStudentOtp = async (req, res) => {
     };
 
     // Student data
+    // Student data
     if (user.role === "student") {
 
-      const student = await Student.findOne({ userId: user._id });
+      const student =
+        await Student.findOne({
+          userId: user._id
+        });
 
       if (student) {
 
         student.token = token;
+
         await student.save();
 
-        responseData.studentId = student.studentId;
+        /// 🔥 MONGO ID
+        responseData.studentId =
+          student._id;
 
+        /// 🔥 DISPLAY ID
+        responseData.studentCode =
+          student.studentId;
+
+        /// 🔥 TRAINER MONGO ID
+        responseData.trainerId =
+          student.trainerId;
       }
-
     }
 
     // Trainer data

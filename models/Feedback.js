@@ -26,6 +26,10 @@ new mongoose.Schema({
     type: String,
   },
 
+  classTitle: {
+    type: String,
+  }
+
 }, {
   timestamps: true,
 });

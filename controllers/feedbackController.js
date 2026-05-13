@@ -14,6 +14,7 @@ async (req, res) => {
       rating,
       message,
       classId,
+      classTitle,
     } = req.body;
 
     const feedback =
@@ -28,6 +29,8 @@ async (req, res) => {
       message,
 
       classId,
+
+      classTitle,
     });
 
     return res.status(200).json({

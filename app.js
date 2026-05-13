@@ -34,5 +34,6 @@ app.use("/api", classRoutes);
 app.use("/api/workouts", require("./routes/workoutRoutes")); 
 app.use("/api", require("./routes/bannerRoutes"));
 app.use("/api/chat", require("./routes/chatRoutes"));
+app.use("/api/feedback", require("./routes/feedbackRoutes"));
 
 module.exports = app;

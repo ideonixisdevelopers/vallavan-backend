@@ -18,7 +18,7 @@ router.post(
 
 router.put(
   "/class/complete/:id",
-  markClassComplete,
+  classController.markClassComplete,
 );
 
 module.exports = router;

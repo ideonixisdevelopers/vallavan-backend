@@ -261,3 +261,53 @@ exports.getAllClasses = async (req, res) => {
     });
   }
 };
+
+exports.markClassComplete =
+  async (req, res) => {
+
+    try {
+
+      const updatedClass =
+          await ClassModel
+              .findByIdAndUpdate(
+
+        req.params.id,
+
+        {
+          status: "complete",
+        },
+
+        {
+          new: true,
+        },
+      );
+
+      if (!updatedClass) {
+
+        return res.status(404)
+            .json({
+
+          success: false,
+
+          message:
+              "Class not found",
+        });
+      }
+
+      res.status(200).json({
+
+        success: true,
+
+        data: updatedClass,
+      });
+
+    } catch (e) {
+
+      res.status(500).json({
+
+        success: false,
+
+        message: e.message,
+      });
+    }
+  };

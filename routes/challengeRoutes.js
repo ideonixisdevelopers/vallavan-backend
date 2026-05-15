@@ -12,6 +12,8 @@ const {
 
   markDailyProgress,
 
+  getChallengeWorkout,
+
 } = require(
   "../controllers/challengeController",
 );
@@ -40,5 +42,10 @@ router.post(
   markDailyProgress,
 );
 
-module.exports =
-  router;
+router.get(
+  "/challenge-workout/:challengeId/:day",
+
+  getChallengeWorkout,
+);
+
+module.exports = router;
